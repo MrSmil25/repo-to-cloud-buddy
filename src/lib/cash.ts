@@ -92,6 +92,10 @@ export type CashExpense = {
   recorded_by: string | null;
   created_at: string;
   profiles?: { full_name: string | null } | null;
+  is_archived?: boolean | null;
+  archived_by?: string | null;
+  archived_at?: string | null;
+  archive_reason?: string | null;
 };
 
 export type CashBalance = {
