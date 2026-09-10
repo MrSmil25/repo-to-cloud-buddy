@@ -47,7 +47,7 @@ export function DealFormDialog({
   const queryClient = useQueryClient();
   const { data: divisions = [] } = useDivisions();
   const { data: profiles = [] } = useProfiles();
-  const { data: companies = [] } = useQuery({ queryKey: ["companies"], queryFn: fetchCompanies });
+  const { data: companies = [] } = useQuery({ queryKey: ["companies"], queryFn: () => fetchCompanies() });
   const { data: events = [] } = useQuery({ queryKey: ["event-options"], queryFn: fetchEventOptions });
 
   const [name, setName] = useState("");

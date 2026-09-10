@@ -23,6 +23,9 @@ import {
   transactionDivision,
   type TransactionWithRelations,
 } from "@/lib/transactions";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { TransactionFormDialog } from "@/components/transactions/TransactionFormDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -79,13 +82,14 @@ function TransactionsPage() {
   const [division, setDivision] = useState("all");
   const [event, setEvent] = useState("all");
 
+  const [showArchived, setShowArchived] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<TransactionWithRelations | null>(null);
   const [deleting, setDeleting] = useState<TransactionWithRelations | null>(null);
 
   const { data: transactions = [], isLoading } = useQuery({
-    queryKey: ["transactions", from, to],
-    queryFn: () => fetchTransactions({ from, to }),
+    queryKey: ["transactions", from, to, showArchived],
+    queryFn: () => fetchTransactions({ from, to, includeArchived: showArchived }),
   });
   const { data: categories = [] } = useQuery({
     queryKey: ["transaction-categories", "all"],
@@ -213,6 +217,9 @@ function TransactionsPage() {
             </SelectContent>
           </Select>
         </div>
+        <div className="flex items-end">
+          <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="transactions-archive" />
+        </div>
       </div>
 
       {/* Summary */}
@@ -256,10 +263,13 @@ function TransactionsPage() {
                   >
                     {income ? <ArrowDownLeft className="size-4" /> : <ArrowUpRight className="size-4" />}
                   </span>
-                  <div className="rounded-2xl border bg-card p-4 shadow-sm">
+                  <div className={`rounded-2xl border bg-card p-4 shadow-sm ${t.is_archived ? "opacity-50" : ""}`}>
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="font-semibold leading-snug">{t.description}</p>
+                        <p className={`font-semibold leading-snug ${t.is_archived ? "line-through opacity-60" : ""}`}>
+                          {t.description}
+                        </p>
+                        {t.is_archived && <ArchivedBadge className="mt-1" />}
                         <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs">
                           <span
                             className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-medium"
@@ -304,6 +314,15 @@ function TransactionsPage() {
                             </DropdownMenuContent>
                           </DropdownMenu>
                         )}
+                        <ArchiveMenu
+                          table="fund_transactions"
+                          recordId={t.id}
+                          recordName={t.description}
+                          isArchived={t.is_archived}
+                          itemDivision={transactionDivision(t)}
+                          extraWarning="Mengarsipkan transaksi akan mengeluarkannya dari ringkasan keuangan."
+                          invalidateKeys={["transactions", "dashboard-finance", "finance-summary"]}
+                        />
                       </div>
                     </div>
 

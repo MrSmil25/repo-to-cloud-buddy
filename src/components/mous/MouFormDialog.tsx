@@ -45,7 +45,7 @@ export function MouFormDialog({
 }) {
   const queryClient = useQueryClient();
   const { data: profiles = [] } = useProfiles();
-  const { data: companies = [] } = useQuery({ queryKey: ["companies"], queryFn: fetchCompanies });
+  const { data: companies = [] } = useQuery({ queryKey: ["companies"], queryFn: () => fetchCompanies() });
 
   const [title, setTitle] = useState("");
   const [companyId, setCompanyId] = useState("none");

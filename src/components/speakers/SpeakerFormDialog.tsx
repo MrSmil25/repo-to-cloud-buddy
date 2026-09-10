@@ -39,7 +39,7 @@ export function SpeakerFormDialog({
   onCreated?: (speaker: Speaker) => void;
 }) {
   const queryClient = useQueryClient();
-  const { data: companies = [] } = useQuery({ queryKey: ["companies"], queryFn: fetchCompanies });
+  const { data: companies = [] } = useQuery({ queryKey: ["companies"], queryFn: () => fetchCompanies() });
 
   const [fullName, setFullName] = useState("");
   const [title, setTitle] = useState("");

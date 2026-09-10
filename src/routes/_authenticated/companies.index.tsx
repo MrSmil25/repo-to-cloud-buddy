@@ -7,6 +7,9 @@ import { Plus } from "lucide-react";
 import { fetchCompanies, STATUS_META, TYPE_META, COMPANY_TYPES, COMPANY_STATUSES } from "@/lib/companies";
 import { useDivisions } from "@/hooks/useProfile";
 import { CompanyFormDialog } from "@/components/companies/CompanyFormDialog";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,9 +35,10 @@ export const Route = createFileRoute("/_authenticated/companies/")({
 });
 
 function CompaniesPage() {
+  const [showArchived, setShowArchived] = useState(false);
   const { data: companies = [], isLoading } = useQuery({
-    queryKey: ["companies"],
-    queryFn: fetchCompanies,
+    queryKey: ["companies", showArchived],
+    queryFn: () => fetchCompanies(showArchived),
   });
   const { data: divisions = [] } = useDivisions();
   const [search, setSearch] = useState("");
@@ -95,6 +99,7 @@ function CompaniesPage() {
             ))}
           </SelectContent>
         </Select>
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="companies-archive" />
       </div>
 
       <div className="overflow-x-auto rounded-2xl border bg-card shadow-sm">
@@ -107,21 +112,27 @@ function CompaniesPage() {
               <th className="px-4 py-3">Kota</th>
               <th className="px-4 py-3">Divisi Pemilik</th>
               <th className="px-4 py-3">Terakhir Dihubungi</th>
+              <th className="px-4 py-3 text-right">Aksi</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {isLoading && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Memuat…</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Memuat…</td></tr>
             )}
             {!isLoading && filtered.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Belum ada perusahaan.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Belum ada perusahaan.</td></tr>
             )}
             {filtered.map((c) => (
-              <tr key={c.id} className="hover:bg-muted/40">
+              <tr key={c.id} className={`hover:bg-muted/40 ${c.is_archived ? "opacity-50" : ""}`}>
                 <td className="px-4 py-3 font-medium">
-                  <Link to="/companies/$id" params={{ id: c.id }} className="text-primary hover:underline">
+                  <Link
+                    to="/companies/$id"
+                    params={{ id: c.id }}
+                    className={`text-primary hover:underline ${c.is_archived ? "line-through opacity-60" : ""}`}
+                  >
                     {c.name}
                   </Link>
+                  {c.is_archived && <ArchivedBadge className="ml-2" />}
                   {c.industry && <p className="text-xs text-muted-foreground">{c.industry}</p>}
                 </td>
                 <td className="px-4 py-3">
@@ -140,6 +151,17 @@ function CompaniesPage() {
                   {c.last_touch_date
                     ? format(new Date(c.last_touch_date), "d MMM yyyy", { locale: idLocale })
                     : "—"}
+                </td>
+                <td className="px-4 py-3 text-right">
+                  <ArchiveMenu
+                    table="companies"
+                    recordId={c.id}
+                    recordName={c.name}
+                    isArchived={c.is_archived}
+                    itemDivision={c.owner_division}
+                    invalidateKeys={["companies"]}
+                    className="flex justify-end"
+                  />
                 </td>
               </tr>
             ))}

@@ -709,32 +709,69 @@ export type Database = {
       cash_expenses: {
         Row: {
           amount_idr: number
+          archived_at: string | null
+          archived_by: string | null
           created_at: string | null
           description: string
           expense_date: string
           id: string
+          is_archived: boolean
           proof_url: string | null
           recorded_by: string | null
         }
         Insert: {
           amount_idr: number
+          archived_at?: string | null
+          archived_by?: string | null
           created_at?: string | null
           description: string
           expense_date?: string
           id?: string
+          is_archived?: boolean
           proof_url?: string | null
           recorded_by?: string | null
         }
         Update: {
           amount_idr?: number
+          archived_at?: string | null
+          archived_by?: string | null
           created_at?: string | null
           description?: string
           expense_date?: string
           id?: string
+          is_archived?: boolean
           proof_url?: string | null
           recorded_by?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "cash_expenses_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "cash_expenses_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "cash_expenses_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cash_expenses_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "cash_expenses_recorded_by_fkey"
             columns: ["recorded_by"]
@@ -983,11 +1020,15 @@ export type Database = {
       collections: {
         Row: {
           amount_per_person: number
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
           created_at: string | null
           created_by: string | null
           description: string | null
           due_date: string | null
           id: string
+          is_archived: boolean
           kind: Database["public"]["Enums"]["collection_kind"]
           status: Database["public"]["Enums"]["collection_status"]
           target_division: string | null
@@ -996,11 +1037,15 @@ export type Database = {
         }
         Insert: {
           amount_per_person: number
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           created_at?: string | null
           created_by?: string | null
           description?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
           kind: Database["public"]["Enums"]["collection_kind"]
           status?: Database["public"]["Enums"]["collection_status"]
           target_division?: string | null
@@ -1009,11 +1054,15 @@ export type Database = {
         }
         Update: {
           amount_per_person?: number
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           created_at?: string | null
           created_by?: string | null
           description?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
           kind?: Database["public"]["Enums"]["collection_kind"]
           status?: Database["public"]["Enums"]["collection_status"]
           target_division?: string | null
@@ -1021,6 +1070,34 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "collections_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "collections_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "collections_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collections_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "collections_created_by_fkey"
             columns: ["created_by"]
@@ -1060,12 +1137,16 @@ export type Database = {
       }
       companies: {
         Row: {
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
           city: string | null
           created_at: string | null
           created_by: string | null
           first_contact_date: string | null
           id: string
           industry: string | null
+          is_archived: boolean
           last_touch_date: string | null
           logo_url: string | null
           name: string
@@ -1077,12 +1158,16 @@ export type Database = {
           website: string | null
         }
         Insert: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           city?: string | null
           created_at?: string | null
           created_by?: string | null
           first_contact_date?: string | null
           id?: string
           industry?: string | null
+          is_archived?: boolean
           last_touch_date?: string | null
           logo_url?: string | null
           name: string
@@ -1094,12 +1179,16 @@ export type Database = {
           website?: string | null
         }
         Update: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           city?: string | null
           created_at?: string | null
           created_by?: string | null
           first_contact_date?: string | null
           id?: string
           industry?: string | null
+          is_archived?: boolean
           last_touch_date?: string | null
           logo_url?: string | null
           name?: string
@@ -1111,6 +1200,34 @@ export type Database = {
           website?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "companies_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "companies_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "companies_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companies_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "companies_created_by_fkey"
             columns: ["created_by"]
@@ -1257,6 +1374,9 @@ export type Database = {
       }
       deals: {
         Row: {
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
           company_id: string | null
           created_at: string | null
           deadline: string | null
@@ -1264,6 +1384,7 @@ export type Database = {
           deliverables: string | null
           event_id: string | null
           id: string
+          is_archived: boolean
           name: string
           notes: string | null
           owner_division: string | null
@@ -1275,6 +1396,9 @@ export type Database = {
           value_idr: number | null
         }
         Insert: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           company_id?: string | null
           created_at?: string | null
           deadline?: string | null
@@ -1282,6 +1406,7 @@ export type Database = {
           deliverables?: string | null
           event_id?: string | null
           id?: string
+          is_archived?: boolean
           name: string
           notes?: string | null
           owner_division?: string | null
@@ -1293,6 +1418,9 @@ export type Database = {
           value_idr?: number | null
         }
         Update: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           company_id?: string | null
           created_at?: string | null
           deadline?: string | null
@@ -1300,6 +1428,7 @@ export type Database = {
           deliverables?: string | null
           event_id?: string | null
           id?: string
+          is_archived?: boolean
           name?: string
           notes?: string | null
           owner_division?: string | null
@@ -1311,6 +1440,34 @@ export type Database = {
           value_idr?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "deals_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "deals_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "deals_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "deals_company_id_fkey"
             columns: ["company_id"]
@@ -1366,6 +1523,76 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "people"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      division_section_overrides: {
+        Row: {
+          configured_by: string | null
+          division: string | null
+          id: string
+          is_hidden: boolean
+          section_key: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          configured_by?: string | null
+          division?: string | null
+          id?: string
+          is_hidden: boolean
+          section_key?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          configured_by?: string | null
+          division?: string | null
+          id?: string
+          is_hidden?: boolean
+          section_key?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "division_section_overrides_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "division_section_overrides_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "division_section_overrides_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "division_section_overrides_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "division_section_overrides_division_fkey"
+            columns: ["division"]
+            isOneToOne: false
+            referencedRelation: "divisions"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "division_section_overrides_section_key_fkey"
+            columns: ["section_key"]
+            isOneToOne: false
+            referencedRelation: "section_settings"
+            referencedColumns: ["section_key"]
           },
         ]
       }
@@ -1532,6 +1759,9 @@ export type Database = {
         Row: {
           actual_attendees: number | null
           actual_spend_idr: number | null
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
           budget_idr: number | null
           created_at: string | null
           date_end: string | null
@@ -1539,6 +1769,7 @@ export type Database = {
           description: string | null
           event_type: Database["public"]["Enums"]["event_type"]
           id: string
+          is_archived: boolean
           name: string
           notes: string | null
           pic_id: string | null
@@ -1553,6 +1784,9 @@ export type Database = {
         Insert: {
           actual_attendees?: number | null
           actual_spend_idr?: number | null
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           budget_idr?: number | null
           created_at?: string | null
           date_end?: string | null
@@ -1560,6 +1794,7 @@ export type Database = {
           description?: string | null
           event_type?: Database["public"]["Enums"]["event_type"]
           id?: string
+          is_archived?: boolean
           name: string
           notes?: string | null
           pic_id?: string | null
@@ -1574,6 +1809,9 @@ export type Database = {
         Update: {
           actual_attendees?: number | null
           actual_spend_idr?: number | null
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           budget_idr?: number | null
           created_at?: string | null
           date_end?: string | null
@@ -1581,6 +1819,7 @@ export type Database = {
           description?: string | null
           event_type?: Database["public"]["Enums"]["event_type"]
           id?: string
+          is_archived?: boolean
           name?: string
           notes?: string | null
           pic_id?: string | null
@@ -1593,6 +1832,34 @@ export type Database = {
           venue_address?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "events_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "events_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "events_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "events_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "events_pic_id_fkey"
             columns: ["pic_id"]
@@ -1775,10 +2042,14 @@ export type Database = {
       fund_transactions: {
         Row: {
           amount_idr: number
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
           category: string
           created_at: string | null
           description: string
           id: string
+          is_archived: boolean
           proof_url: string | null
           recorded_by: string | null
           related_deal_id: string | null
@@ -1790,10 +2061,14 @@ export type Database = {
         }
         Insert: {
           amount_idr: number
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           category: string
           created_at?: string | null
           description: string
           id?: string
+          is_archived?: boolean
           proof_url?: string | null
           recorded_by?: string | null
           related_deal_id?: string | null
@@ -1805,10 +2080,14 @@ export type Database = {
         }
         Update: {
           amount_idr?: number
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           category?: string
           created_at?: string | null
           description?: string
           id?: string
+          is_archived?: boolean
           proof_url?: string | null
           recorded_by?: string | null
           related_deal_id?: string | null
@@ -1819,6 +2098,34 @@ export type Database = {
           visibility?: Database["public"]["Enums"]["transaction_visibility"]
         }
         Relationships: [
+          {
+            foreignKeyName: "fund_transactions_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "fund_transactions_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "fund_transactions_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fund_transactions_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "fund_transactions_recorded_by_fkey"
             columns: ["recorded_by"]
@@ -2666,11 +2973,15 @@ export type Database = {
       }
       mous: {
         Row: {
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
           company_id: string | null
           created_at: string | null
           deal_id: string | null
           expiry_date: string | null
           id: string
+          is_archived: boolean
           notes: string | null
           pdf_url: string | null
           renewal_reminder_days: number | null
@@ -2683,11 +2994,15 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           company_id?: string | null
           created_at?: string | null
           deal_id?: string | null
           expiry_date?: string | null
           id?: string
+          is_archived?: boolean
           notes?: string | null
           pdf_url?: string | null
           renewal_reminder_days?: number | null
@@ -2700,11 +3015,15 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
           company_id?: string | null
           created_at?: string | null
           deal_id?: string | null
           expiry_date?: string | null
           id?: string
+          is_archived?: boolean
           notes?: string | null
           pdf_url?: string | null
           renewal_reminder_days?: number | null
@@ -2717,6 +3036,34 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "mous_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "mous_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "mous_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mous_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "mous_company_id_fkey"
             columns: ["company_id"]
@@ -2995,11 +3342,14 @@ export type Database = {
       }
       people: {
         Row: {
+          archived_at: string | null
+          archived_by: string | null
           company_id: string | null
           created_at: string | null
           email: string | null
           full_name: string
           id: string
+          is_archived: boolean
           linkedin_url: string | null
           notes: string | null
           phone: string | null
@@ -3011,11 +3361,14 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          archived_at?: string | null
+          archived_by?: string | null
           company_id?: string | null
           created_at?: string | null
           email?: string | null
           full_name: string
           id?: string
+          is_archived?: boolean
           linkedin_url?: string | null
           notes?: string | null
           phone?: string | null
@@ -3027,11 +3380,14 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          archived_at?: string | null
+          archived_by?: string | null
           company_id?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string
           id?: string
+          is_archived?: boolean
           linkedin_url?: string | null
           notes?: string | null
           phone?: string | null
@@ -3043,6 +3399,34 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "people_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "people_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "people_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "people_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "people_company_id_fkey"
             columns: ["company_id"]
@@ -3165,8 +3549,66 @@ export type Database = {
           },
         ]
       }
+      section_settings: {
+        Row: {
+          configured_by: string | null
+          hidden_for_roles: Database["public"]["Enums"]["user_role"][] | null
+          label: string
+          section_key: string
+          sort_order: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          configured_by?: string | null
+          hidden_for_roles?: Database["public"]["Enums"]["user_role"][] | null
+          label: string
+          section_key: string
+          sort_order?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          configured_by?: string | null
+          hidden_for_roles?: Database["public"]["Enums"]["user_role"][] | null
+          label?: string
+          section_key?: string
+          sort_order?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "section_settings_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "section_settings_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "section_settings_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "section_settings_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+        ]
+      }
       speakers: {
         Row: {
+          archived_at: string | null
+          archived_by: string | null
           bio_short: string | null
           company_id: string | null
           contact_person_id: string | null
@@ -3178,12 +3620,15 @@ export type Database = {
           expertise: string | null
           full_name: string
           id: string
+          is_archived: boolean
           notes: string | null
           photo_url: string | null
           title: string | null
           updated_at: string | null
         }
         Insert: {
+          archived_at?: string | null
+          archived_by?: string | null
           bio_short?: string | null
           company_id?: string | null
           contact_person_id?: string | null
@@ -3195,12 +3640,15 @@ export type Database = {
           expertise?: string | null
           full_name: string
           id?: string
+          is_archived?: boolean
           notes?: string | null
           photo_url?: string | null
           title?: string | null
           updated_at?: string | null
         }
         Update: {
+          archived_at?: string | null
+          archived_by?: string | null
           bio_short?: string | null
           company_id?: string | null
           contact_person_id?: string | null
@@ -3212,12 +3660,41 @@ export type Database = {
           expertise?: string | null
           full_name?: string
           id?: string
+          is_archived?: boolean
           notes?: string | null
           photo_url?: string | null
           title?: string | null
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "speakers_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "speakers_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "speakers_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "speakers_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
           {
             foreignKeyName: "speakers_company_id_fkey"
             columns: ["company_id"]
@@ -4169,6 +4646,10 @@ export type Database = {
       }
     }
     Functions: {
+      archive_record: {
+        Args: { p_reason?: string; p_record_id: string; p_table: string }
+        Returns: string
+      }
       auto_approve_cancel_requests: { Args: never; Returns: undefined }
       auto_reject_help_requests: { Args: never; Returns: undefined }
       can_access_division: { Args: { target_div: string }; Returns: boolean }
@@ -4221,6 +4702,7 @@ export type Database = {
       has_voted: { Args: { p_proposal: string }; Returns: boolean }
       is_event_pic: { Args: { target_event: string }; Returns: boolean }
       is_my_assignment: { Args: { p_assignment: string }; Returns: boolean }
+      is_section_visible: { Args: { p_section: string }; Returns: boolean }
       member_report: {
         Args: { p_end: string; p_member: string; p_start: string }
         Returns: {
@@ -4284,6 +4766,10 @@ export type Database = {
         }[]
       }
       remind_stale_tasks: { Args: never; Returns: undefined }
+      restore_record: {
+        Args: { p_record_id: string; p_table: string }
+        Returns: string
+      }
       run_daily_reminders: { Args: never; Returns: undefined }
       take_okr_snapshot: {
         Args: { p_period: Database["public"]["Enums"]["okr_period"] }

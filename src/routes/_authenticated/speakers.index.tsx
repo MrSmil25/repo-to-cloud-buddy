@@ -11,6 +11,9 @@ import { formatRupiah } from "@/lib/format";
 import { useMyProfile } from "@/hooks/useProfile";
 import { StorageImage } from "@/components/events/StorageImage";
 import { SpeakerFormDialog } from "@/components/speakers/SpeakerFormDialog";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,7 +50,11 @@ export const Route = createFileRoute("/_authenticated/speakers/")({
 function SpeakersPage() {
   const { data: profile } = useMyProfile();
   const canManage = canManageEvents(profile as never);
-  const { data: speakers = [], isLoading } = useQuery({ queryKey: ["speakers"], queryFn: fetchSpeakers });
+  const [showArchived, setShowArchived] = useState(false);
+  const { data: speakers = [], isLoading } = useQuery({
+    queryKey: ["speakers", showArchived],
+    queryFn: () => fetchSpeakers(showArchived),
+  });
   const { data: counts = {} } = useQuery({
     queryKey: ["speaker-event-counts"],
     queryFn: fetchSpeakerEventCounts,
@@ -105,6 +112,7 @@ function SpeakersPage() {
             ))}
           </SelectContent>
         </Select>
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="speakers-archive" />
       </div>
 
       <Card>
@@ -120,22 +128,23 @@ function SpeakersPage() {
                 <TableHead>Afiliasi</TableHead>
                 <TableHead>Rate</TableHead>
                 <TableHead className="text-right">Total Event</TableHead>
+                <TableHead className="text-right">Aksi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center text-sm text-muted-foreground">Memuat…</TableCell>
+                  <TableCell colSpan={9} className="text-center text-sm text-muted-foreground">Memuat…</TableCell>
                 </TableRow>
               ) : filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center text-sm text-muted-foreground">
+                  <TableCell colSpan={9} className="text-center text-sm text-muted-foreground">
                     Belum ada speaker.
                   </TableCell>
                 </TableRow>
               ) : (
                 filtered.map((s) => (
-                  <TableRow key={s.id} className="cursor-pointer">
+                  <TableRow key={s.id} className={`cursor-pointer ${s.is_archived ? "opacity-50" : ""}`}>
                     <TableCell>
                       <StorageImage
                         bucket="speakers"
@@ -146,9 +155,14 @@ function SpeakersPage() {
                       />
                     </TableCell>
                     <TableCell className="font-medium">
-                      <Link to="/speakers/$id" params={{ id: s.id }} className="hover:underline">
+                      <Link
+                        to="/speakers/$id"
+                        params={{ id: s.id }}
+                        className={`hover:underline ${s.is_archived ? "line-through opacity-60" : ""}`}
+                      >
                         {s.full_name}
                       </Link>
+                      {s.is_archived && <ArchivedBadge className="ml-2" />}
                     </TableCell>
                     <TableCell>{s.title || "-"}</TableCell>
                     <TableCell>{s.expertise || "-"}</TableCell>
@@ -158,6 +172,16 @@ function SpeakersPage() {
                     <TableCell>{s.companies?.name ?? "-"}</TableCell>
                     <TableCell>{s.default_rate_idr ? formatRupiah(Number(s.default_rate_idr)) : "-"}</TableCell>
                     <TableCell className="text-right">{counts[s.id] ?? 0}</TableCell>
+                    <TableCell className="text-right">
+                      <ArchiveMenu
+                        table="speakers"
+                        recordId={s.id}
+                        recordName={s.full_name}
+                        isArchived={s.is_archived}
+                        invalidateKeys={["speakers"]}
+                        className="flex justify-end"
+                      />
+                    </TableCell>
                   </TableRow>
                 ))
               )}

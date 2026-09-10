@@ -26,6 +26,9 @@ import {
 } from "@/lib/deals";
 import { formatDateID, formatRupiah } from "@/lib/format";
 import { DealFormDialog } from "@/components/deals/DealFormDialog";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -59,16 +62,31 @@ function DealCard({ deal }: { deal: DealWithRelations }) {
       style={transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined}
       className={`cursor-grab space-y-2 rounded-xl border bg-card p-3 text-left shadow-sm active:cursor-grabbing ${
         isDragging ? "opacity-60 shadow-lg" : ""
-      }`}
+      } ${deal.is_archived ? "opacity-50" : ""}`}
     >
       <div className="flex items-start justify-between gap-2">
-        <p className="text-sm font-semibold leading-snug">{deal.name}</p>
+        <p
+          className={`text-sm font-semibold leading-snug ${
+            deal.is_archived ? "line-through opacity-60" : ""
+          }`}
+        >
+          {deal.name}
+        </p>
+        <ArchiveMenu
+          table="deals"
+          recordId={deal.id}
+          recordName={deal.name}
+          isArchived={deal.is_archived}
+          itemDivision={deal.owner_division}
+          invalidateKeys={["deals"]}
+        />
         {deal.profiles && (
           <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-primary">
             {initials(deal.profiles.full_name)}
           </span>
         )}
       </div>
+      {deal.is_archived && <ArchivedBadge />}
       {deal.companies && <p className="text-xs text-muted-foreground">{deal.companies.name}</p>}
       <p className="text-sm font-bold">{formatRupiah(deal.value_idr)}</p>
       <div className="flex flex-wrap items-center gap-1.5">
@@ -128,7 +146,11 @@ function Column({
 function PipelinePage() {
   const queryClient = useQueryClient();
   const { data: divisions = [] } = useDivisions();
-  const { data: deals = [], isLoading } = useQuery({ queryKey: ["deals"], queryFn: fetchDeals });
+  const [showArchived, setShowArchived] = useState(false);
+  const { data: deals = [], isLoading } = useQuery({
+    queryKey: ["deals", showArchived],
+    queryFn: () => fetchDeals(showArchived),
+  });
   const [typeFilter, setTypeFilter] = useState("all");
   const [divFilter, setDivFilter] = useState("all");
   const [open, setOpen] = useState(false);
@@ -196,6 +218,7 @@ function PipelinePage() {
             ))}
           </SelectContent>
         </Select>
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="pipeline-archive" />
       </div>
 
       {isLoading ? (

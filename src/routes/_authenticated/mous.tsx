@@ -14,6 +14,9 @@ import {
 } from "@/lib/mous";
 import { MouFormDialog } from "@/components/mous/MouFormDialog";
 import { MouDetailDialog } from "@/components/mous/MouDetailDialog";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -39,7 +42,11 @@ export const Route = createFileRoute("/_authenticated/mous")({
 });
 
 function MousPage() {
-  const { data: mous = [], isLoading } = useQuery({ queryKey: ["mous"], queryFn: fetchMous });
+  const [showArchived, setShowArchived] = useState(false);
+  const { data: mous = [], isLoading } = useQuery({
+    queryKey: ["mous", showArchived],
+    queryFn: () => fetchMous(showArchived),
+  });
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
   const [formOpen, setFormOpen] = useState(false);
@@ -94,6 +101,7 @@ function MousPage() {
             ))}
           </SelectContent>
         </Select>
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="mous-archive" />
       </div>
 
       <div className="overflow-x-auto rounded-2xl border bg-card shadow-sm">
@@ -106,14 +114,15 @@ function MousPage() {
               <th className="px-4 py-3">Ditandatangani</th>
               <th className="px-4 py-3">Expired</th>
               <th className="px-4 py-3">Sisa Hari</th>
+              <th className="px-4 py-3 text-right">Aksi</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {isLoading && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Memuat…</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Memuat…</td></tr>
             )}
             {!isLoading && rows.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Belum ada MoU.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Belum ada MoU.</td></tr>
             )}
             {rows.map((m) => {
               const left = daysLeft(m.expiry_date);
@@ -121,10 +130,13 @@ function MousPage() {
               return (
                 <tr
                   key={m.id}
-                  className="cursor-pointer hover:bg-muted/40"
+                  className={`cursor-pointer hover:bg-muted/40 ${m.is_archived ? "opacity-50" : ""}`}
                   onClick={() => setDetail(m)}
                 >
-                  <td className="px-4 py-3 font-medium">{m.title}</td>
+                  <td className="px-4 py-3 font-medium">
+                    <span className={m.is_archived ? "line-through opacity-60" : ""}>{m.title}</span>
+                    {m.is_archived && <ArchivedBadge className="ml-2" />}
+                  </td>
                   <td className="px-4 py-3">{m.companies?.name ?? "—"}</td>
                   <td className="px-4 py-3">
                     <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${meta?.className ?? ""}`}>
@@ -134,6 +146,16 @@ function MousPage() {
                   <td className="px-4 py-3">{formatDateID(m.signed_date)}</td>
                   <td className="px-4 py-3">{formatDateID(m.expiry_date)}</td>
                   <td className={`px-4 py-3 ${daysLeftClassName(left)}`}>{daysLeftLabel(left)}</td>
+                  <td className="px-4 py-3 text-right">
+                    <ArchiveMenu
+                      table="mous"
+                      recordId={m.id}
+                      recordName={m.title}
+                      isArchived={m.is_archived}
+                      invalidateKeys={["mous"]}
+                      className="flex justify-end"
+                    />
+                  </td>
                 </tr>
               );
             })}

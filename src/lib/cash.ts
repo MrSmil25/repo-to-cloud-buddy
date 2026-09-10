@@ -46,6 +46,10 @@ export type Collection = {
   status: string;
   created_by: string | null;
   created_at: string;
+  is_archived?: boolean | null;
+  archived_by?: string | null;
+  archived_at?: string | null;
+  archive_reason?: string | null;
 };
 
 export type CollectionProgress = {
@@ -60,6 +64,7 @@ export type CollectionProgress = {
   total_lunas: number;
   total_nunggu: number;
   total_terkumpul: number;
+  is_archived?: boolean | null;
 };
 
 export type CollectionPayment = {
@@ -88,6 +93,10 @@ export type CashExpense = {
   recorded_by: string | null;
   created_at: string;
   profiles?: { full_name: string | null } | null;
+  is_archived?: boolean | null;
+  archived_by?: string | null;
+  archived_at?: string | null;
+  archive_reason?: string | null;
 };
 
 export type CashBalance = {
@@ -123,6 +132,20 @@ export async function fetchCollectionProgress(): Promise<CollectionProgress[]> {
   const { data, error } = await db.from("collection_progress").select("*");
   if (error) throw error;
   return (data ?? []) as CollectionProgress[];
+}
+
+/** Progress program kas + status arsip dari tabel collections. */
+export async function fetchCollectionProgressWithArchive(
+  includeArchived = false,
+): Promise<CollectionProgress[]> {
+  const [progress, collections] = await Promise.all([
+    fetchCollectionProgress(),
+    fetchCollections(true),
+  ]);
+  const archived = new Map(collections.map((c) => [c.id, c.is_archived === true]));
+  return progress
+    .map((p) => ({ ...p, is_archived: archived.get(p.collection_id) ?? false }))
+    .filter((p) => (includeArchived === true ? true : !p.is_archived));
 }
 
 export async function fetchCollectionPayments(collectionId: string): Promise<CollectionPayment[]> {
@@ -175,13 +198,21 @@ export async function fetchPendingClaims(): Promise<CollectionPayment[]> {
   return (data ?? []) as CollectionPayment[];
 }
 
-export async function fetchCashExpenses(): Promise<CashExpense[]> {
-  const { data, error } = await db
-    .from("cash_expenses")
-    .select("*, profiles:recorded_by(full_name)")
-    .order("expense_date", { ascending: false });
+export async function fetchCashExpenses(includeArchived = false): Promise<CashExpense[]> {
+  let q = db.from("cash_expenses").select("*, profiles:recorded_by(full_name)");
+  if (includeArchived !== true) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("expense_date", { ascending: false });
   if (error) throw error;
   return (data ?? []) as CashExpense[];
+}
+
+/** Daftar program iuran/kas (collections) untuk tab Kelola Program. */
+export async function fetchCollections(includeArchived = false): Promise<Collection[]> {
+  let q = db.from("collections").select("*");
+  if (includeArchived !== true) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("created_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as Collection[];
 }
 
 export async function createCollection(input: {

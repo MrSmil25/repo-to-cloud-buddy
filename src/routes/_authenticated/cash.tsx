@@ -25,6 +25,7 @@ import {
   fetchCashExpenses,
   fetchCollectionPayments,
   fetchCollectionProgress,
+  fetchCollectionProgressWithArchive,
   fetchMyBills,
   fetchMyVerifications,
   fetchPendingClaims,
@@ -35,6 +36,9 @@ import {
   type CollectionPayment,
   type CollectionProgress,
 } from "@/lib/cash";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -331,16 +335,18 @@ function ClaimDialog({ bill, onClose }: { bill: CollectionPayment | null; onClos
 /* ---------------- Kelola Program ---------------- */
 
 function ProgramsTab() {
+  const [showArchived, setShowArchived] = useState(false);
   const { data: programs = [], isLoading } = useQuery({
-    queryKey: ["collection-progress"],
-    queryFn: fetchCollectionProgress,
+    queryKey: ["collection-progress", showArchived],
+    queryFn: () => fetchCollectionProgressWithArchive(showArchived),
   });
   const [openForm, setOpenForm] = useState(false);
   const [detail, setDetail] = useState<CollectionProgress | null>(null);
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="programs-archive" />
         <Button onClick={() => setOpenForm(true)}>
           <Plus className="size-4" /> Buat Program
         </Button>
@@ -355,13 +361,16 @@ function ProgramsTab() {
         {programs.map((p) => {
           const kind = KIND_META[p.kind] ?? KIND_META['Kas_Rutin']!;
           return (
+            <div key={p.collection_id} className="relative">
             <button
-              key={p.collection_id}
               onClick={() => setDetail(p)}
-              className="w-full rounded-2xl border bg-card p-5 text-left shadow-sm transition-colors hover:bg-accent/40"
+              className={`w-full rounded-2xl border bg-card p-5 text-left shadow-sm transition-colors hover:bg-accent/40 ${
+                p.is_archived ? "opacity-50" : ""
+              }`}
             >
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-semibold">{p.title}</h3>
+              <div className="flex flex-wrap items-center gap-2 pr-10">
+                <h3 className={`font-semibold ${p.is_archived ? "line-through opacity-60" : ""}`}>{p.title}</h3>
+                {p.is_archived && <ArchivedBadge />}
                 <Badge label={kind.label} className={kind.className} />
                 <Badge
                   label={p.status}
@@ -377,6 +386,18 @@ function ProgramsTab() {
                 {p.total_lunas} dari {p.total_tagihan} lunas · {formatRupiah(p.total_terkumpul)} terkumpul
               </p>
             </button>
+            <div className="absolute right-3 top-3">
+              <ArchiveMenu
+                table="collections"
+                recordId={p.collection_id}
+                recordName={p.title}
+                isArchived={p.is_archived}
+                itemDivision={p.target_division}
+                extraWarning="Mengarsipkan program kas tidak menghapus tagihan atau pembayaran yang sudah tercatat."
+                invalidateKeys={["collection-progress", "cash-balance", "my-bills"]}
+              />
+            </div>
+            </div>
           );
         })}
       </div>
@@ -763,9 +784,10 @@ function VerifyTab({ claims }: { claims: CollectionPayment[] }) {
 
 function ExpensesTab({ canRecord }: { canRecord: boolean }) {
   const qc = useQueryClient();
+  const [showArchived, setShowArchived] = useState(false);
   const { data: expenses = [] } = useQuery({
-    queryKey: ["cash-expenses"],
-    queryFn: fetchCashExpenses,
+    queryKey: ["cash-expenses", showArchived],
+    queryFn: () => fetchCashExpenses(showArchived),
   });
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
@@ -802,8 +824,9 @@ function ExpensesTab({ canRecord }: { canRecord: boolean }) {
       <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
         Pengeluaran ini diambil dari dompet Kas, terpisah dari keuangan operasional organisasi.
       </p>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">Total pengeluaran kas: {formatRupiah(total)}</p>
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="cash-expenses-archive" />
         {canRecord && (
           <Button onClick={() => setOpen(true)}>
             <Plus className="size-4" /> Catat Pengeluaran Kas
@@ -813,15 +836,26 @@ function ExpensesTab({ canRecord }: { canRecord: boolean }) {
 
       <div className="space-y-3">
         {expenses.map((e) => (
-          <div key={e.id} className="rounded-2xl border bg-card p-5 shadow-sm">
+          <div key={e.id} className={`rounded-2xl border bg-card p-5 shadow-sm ${e.is_archived ? "opacity-50" : ""}`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="font-semibold">{e.description}</p>
+                <p className={`font-semibold ${e.is_archived ? "line-through opacity-60" : ""}`}>{e.description}</p>
+                {e.is_archived && <ArchivedBadge className="mt-1" />}
                 <p className="text-sm text-muted-foreground">
                   {formatDateID(e.expense_date)} · dicatat oleh {e.profiles?.full_name ?? "-"}
                 </p>
               </div>
-              <p className="text-lg font-bold text-red-600">{formatRupiah(e.amount_idr)}</p>
+              <div className="flex items-start gap-1">
+                <p className="text-lg font-bold text-red-600">{formatRupiah(e.amount_idr)}</p>
+                <ArchiveMenu
+                  table="cash_expenses"
+                  recordId={e.id}
+                  recordName={e.description}
+                  isArchived={e.is_archived}
+                  extraWarning="Mengarsipkan pengeluaran kas akan mengeluarkannya dari perhitungan saldo kas."
+                  invalidateKeys={["cash-expenses", "cash-balance"]}
+                />
+              </div>
             </div>
             {e.proof_url && (
               <div className="mt-3">

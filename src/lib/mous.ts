@@ -41,21 +41,21 @@ export type MouWithRelations = Mou & {
 const SELECT =
   "*, companies:company_id(id,name), deals:deal_id(id,name), profiles:signatory_our_side_id(id,full_name)";
 
-export async function fetchMous(): Promise<MouWithRelations[]> {
-  const { data, error } = await supabase
-    .from("mous")
-    .select(SELECT)
-    .order("created_at", { ascending: false });
+export async function fetchMous(includeArchived = false): Promise<MouWithRelations[]> {
+  let q = supabase.from("mous").select(SELECT);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as MouWithRelations[];
 }
 
-export async function fetchMousByCompany(companyId: string): Promise<MouWithRelations[]> {
-  const { data, error } = await supabase
-    .from("mous")
-    .select(SELECT)
-    .eq("company_id", companyId)
-    .order("created_at", { ascending: false });
+export async function fetchMousByCompany(
+  companyId: string,
+  includeArchived = false,
+): Promise<MouWithRelations[]> {
+  let q = supabase.from("mous").select(SELECT).eq("company_id", companyId);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as MouWithRelations[];
 }

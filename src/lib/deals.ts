@@ -81,21 +81,21 @@ export type DealWithRelations = Deal & {
 const SELECT =
   "*, companies:company_id(id,name), profiles:owner_person_id(id,full_name,photo_url), events:event_id(id,name)";
 
-export async function fetchDeals(): Promise<DealWithRelations[]> {
-  const { data, error } = await supabase
-    .from("deals")
-    .select(SELECT)
-    .order("created_at", { ascending: false });
+export async function fetchDeals(includeArchived = false): Promise<DealWithRelations[]> {
+  let q = supabase.from("deals").select(SELECT);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as DealWithRelations[];
 }
 
-export async function fetchDealsByCompany(companyId: string): Promise<DealWithRelations[]> {
-  const { data, error } = await supabase
-    .from("deals")
-    .select(SELECT)
-    .eq("company_id", companyId)
-    .order("created_at", { ascending: false });
+export async function fetchDealsByCompany(
+  companyId: string,
+  includeArchived = false,
+): Promise<DealWithRelations[]> {
+  let q = supabase.from("deals").select(SELECT).eq("company_id", companyId);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as DealWithRelations[];
 }
