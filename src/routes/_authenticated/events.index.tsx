@@ -16,6 +16,9 @@ import { useMyProfile } from "@/hooks/useProfile";
 import { StorageImage } from "@/components/events/StorageImage";
 import { EventFormDialog } from "@/components/events/EventFormDialog";
 import { EventStatusBadge, EventTypeBadge } from "@/components/events/EventBadges";
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -42,7 +45,11 @@ export const Route = createFileRoute("/_authenticated/events/")({
 
 function EventsPage() {
   const { data: profile } = useMyProfile();
-  const { data: events = [], isLoading } = useQuery({ queryKey: ["events"], queryFn: fetchEvents });
+  const [showArchived, setShowArchived] = useState(false);
+  const { data: events = [], isLoading } = useQuery({
+    queryKey: ["events", showArchived],
+    queryFn: () => fetchEvents(showArchived),
+  });
   const [status, setStatus] = useState("all");
   const [type, setType] = useState("all");
   const [year, setYear] = useState("all");
@@ -112,6 +119,7 @@ function EventsPage() {
             ))}
           </SelectContent>
         </Select>
+        <ArchiveToggle checked={showArchived} onCheckedChange={setShowArchived} id="events-archive" />
       </div>
 
       {isLoading ? (
@@ -125,8 +133,22 @@ function EventsPage() {
             const actual = Number(event.actual_spend_idr ?? 0);
             const over = budget > 0 && actual > budget * 0.8;
             return (
-              <Link key={event.id} to="/events/$id" params={{ id: event.id }} className="group">
-                <Card className="h-full overflow-hidden transition-shadow hover:shadow-md">
+              <div key={event.id} className="relative">
+                <div className="absolute right-2 top-2 z-10 rounded-full bg-background/80 backdrop-blur">
+                  <ArchiveMenu
+                    table="events"
+                    recordId={event.id}
+                    recordName={event.name}
+                    isArchived={event.is_archived}
+                    invalidateKeys={["events"]}
+                  />
+                </div>
+                <Link to="/events/$id" params={{ id: event.id }} className="group">
+                <Card
+                  className={`h-full overflow-hidden transition-shadow hover:shadow-md ${
+                    event.is_archived ? "opacity-50" : ""
+                  }`}
+                >
                   <StorageImage
                     bucket="events"
                     path={event.poster_url}
@@ -139,7 +161,14 @@ function EventsPage() {
                       <EventTypeBadge type={event.event_type} />
                       <EventStatusBadge status={event.status} />
                     </div>
-                    <h2 className="line-clamp-2 font-semibold leading-snug group-hover:underline">{event.name}</h2>
+                    {event.is_archived && <ArchivedBadge />}
+                    <h2
+                      className={`line-clamp-2 font-semibold leading-snug group-hover:underline ${
+                        event.is_archived ? "line-through opacity-60" : ""
+                      }`}
+                    >
+                      {event.name}
+                    </h2>
                     <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <CalendarDays className="h-3.5 w-3.5" />
                       {formatEventDate(event.date_start, event.date_end)}
@@ -157,7 +186,8 @@ function EventsPage() {
                     </p>
                   </CardContent>
                 </Card>
-              </Link>
+                </Link>
+              </div>
             );
           })}
         </div>
