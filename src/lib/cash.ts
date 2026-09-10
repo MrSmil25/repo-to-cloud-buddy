@@ -46,6 +46,10 @@ export type Collection = {
   status: string;
   created_by: string | null;
   created_at: string;
+  is_archived?: boolean | null;
+  archived_by?: string | null;
+  archived_at?: string | null;
+  archive_reason?: string | null;
 };
 
 export type CollectionProgress = {
