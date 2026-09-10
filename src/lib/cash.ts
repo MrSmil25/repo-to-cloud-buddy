@@ -64,6 +64,7 @@ export type CollectionProgress = {
   total_lunas: number;
   total_nunggu: number;
   total_terkumpul: number;
+  is_archived?: boolean | null;
 };
 
 export type CollectionPayment = {
@@ -131,6 +132,20 @@ export async function fetchCollectionProgress(): Promise<CollectionProgress[]> {
   const { data, error } = await db.from("collection_progress").select("*");
   if (error) throw error;
   return (data ?? []) as CollectionProgress[];
+}
+
+/** Progress program kas + status arsip dari tabel collections. */
+export async function fetchCollectionProgressWithArchive(
+  includeArchived = false,
+): Promise<CollectionProgress[]> {
+  const [progress, collections] = await Promise.all([
+    fetchCollectionProgress(),
+    fetchCollections(true),
+  ]);
+  const archived = new Map(collections.map((c) => [c.id, c.is_archived === true]));
+  return progress
+    .map((p) => ({ ...p, is_archived: archived.get(p.collection_id) ?? false }))
+    .filter((p) => (includeArchived === true ? true : !p.is_archived));
 }
 
 export async function fetchCollectionPayments(collectionId: string): Promise<CollectionPayment[]> {

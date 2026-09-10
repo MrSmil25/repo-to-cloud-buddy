@@ -20,6 +20,10 @@ import { ContactFormDialog } from "@/components/companies/ContactFormDialog";
 import { CompanyDealsTab } from "@/components/deals/CompanyDealsTab";
 import { CompanyMousTab } from "@/components/mous/CompanyMousTab";
 
+import { ArchiveToggle } from "@/components/archive/ArchiveToggle";
+import { ArchiveMenu } from "@/components/archive/ArchiveMenu";
+import { ArchivedBadge } from "@/components/archive/ArchivedBadge";
+import { ArchivedInfoBanner } from "@/components/archive/ArchivedInfoBanner";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -44,9 +48,10 @@ function CompanyDetailPage() {
     queryKey: ["company", id],
     queryFn: () => fetchCompany(id),
   });
+  const [showArchivedPeople, setShowArchivedPeople] = useState(false);
   const { data: people = [] } = useQuery({
-    queryKey: ["company-people", id],
-    queryFn: () => fetchPeople(id),
+    queryKey: ["company-people", id, showArchivedPeople],
+    queryFn: () => fetchPeople(id, showArchivedPeople),
   });
   const [editOpen, setEditOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
@@ -78,6 +83,14 @@ function CompanyDetailPage() {
         <ArrowLeft className="size-4" /> Kembali ke daftar perusahaan
       </Link>
 
+      {company.is_archived && (
+        <ArchivedInfoBanner
+          archivedBy={company.archived_by}
+          archivedAt={company.archived_at}
+          reason={company.archive_reason}
+        />
+      )}
+
       <div className="flex flex-col gap-4 rounded-2xl border bg-card p-6 shadow-sm sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold tracking-tight">{company.name}</h1>
@@ -106,9 +119,19 @@ function CompanyDetailPage() {
           )}
           {company.notes && <p className="max-w-xl text-sm">{company.notes}</p>}
         </div>
-        <Button variant="outline" onClick={() => setEditOpen(true)}>
-          <Pencil className="size-4" /> Edit
-        </Button>
+        <div className="flex items-start gap-2">
+          <Button variant="outline" onClick={() => setEditOpen(true)}>
+            <Pencil className="size-4" /> Edit
+          </Button>
+          <ArchiveMenu
+            table="companies"
+            recordId={company.id}
+            recordName={company.name}
+            isArchived={company.is_archived}
+            itemDivision={company.owner_division}
+            invalidateKeys={["companies", "company"]}
+          />
+        </div>
       </div>
 
       <Tabs defaultValue="kontak">
@@ -119,7 +142,12 @@ function CompanyDetailPage() {
         </TabsList>
 
         <TabsContent value="kontak" className="space-y-4">
-          <div className="flex justify-end">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <ArchiveToggle
+              checked={showArchivedPeople}
+              onCheckedChange={setShowArchivedPeople}
+              id="people-archive"
+            />
             <Button
               onClick={() => {
                 setEditingPerson(null);
@@ -147,9 +175,10 @@ function CompanyDetailPage() {
                   <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Belum ada kontak.</td></tr>
                 )}
                 {people.map((p) => (
-                  <tr key={p.id} className="hover:bg-muted/40">
+                  <tr key={p.id} className={`hover:bg-muted/40 ${p.is_archived ? "opacity-50" : ""}`}>
                     <td className="px-4 py-3 font-medium">
-                      {p.full_name}
+                      <span className={p.is_archived ? "line-through opacity-60" : ""}>{p.full_name}</span>
+                      {p.is_archived && <ArchivedBadge className="ml-2" />}
                       {p.linkedin_url && (
                         <a href={p.linkedin_url} target="_blank" rel="noreferrer" className="block text-xs text-primary hover:underline">
                           LinkedIn
@@ -180,6 +209,14 @@ function CompanyDetailPage() {
                         <Button size="sm" variant="outline" onClick={() => removePerson(p)}>
                           <Trash2 className="size-3.5" />
                         </Button>
+                        <ArchiveMenu
+                          table="people"
+                          recordId={p.id}
+                          recordName={p.full_name}
+                          isArchived={p.is_archived}
+                          itemDivision={company.owner_division}
+                          invalidateKeys={["company-people"]}
+                        />
                       </div>
                     </td>
                   </tr>
