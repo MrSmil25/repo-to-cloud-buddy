@@ -53,7 +53,7 @@ export async function fetchTransactions(f: TransactionFilters): Promise<Transact
   let q = supabase.from("fund_transactions").select(SELECT);
   if (f.from) q = q.gte("transaction_date", f.from);
   if (f.to) q = q.lte("transaction_date", f.to);
-  if (!f.includeArchived) q = q.eq("is_archived", false);
+  if (f.includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q
     .order("transaction_date", { ascending: false })
     .order("created_at", { ascending: false });

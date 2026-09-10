@@ -149,7 +149,7 @@ const EVENT_SELECT = "*, profiles:pic_id(id,full_name,photo_url)";
 
 export async function fetchEvents(includeArchived = false): Promise<EventWithRelations[]> {
   let q = supabase.from("events").select(EVENT_SELECT);
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("date_start", { ascending: false });
   if (error) throw error;
   return (data ?? []) as EventWithRelations[];
@@ -215,7 +215,7 @@ const SPEAKER_SELECT =
 
 export async function fetchSpeakers(includeArchived = false): Promise<SpeakerWithRelations[]> {
   let q = supabase.from("speakers").select(SPEAKER_SELECT);
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("full_name", { ascending: true });
   if (error) throw error;
   return (data ?? []) as SpeakerWithRelations[];

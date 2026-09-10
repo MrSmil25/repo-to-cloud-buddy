@@ -185,7 +185,7 @@ export async function fetchPendingClaims(): Promise<CollectionPayment[]> {
 
 export async function fetchCashExpenses(includeArchived = false): Promise<CashExpense[]> {
   let q = db.from("cash_expenses").select("*, profiles:recorded_by(full_name)");
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("expense_date", { ascending: false });
   if (error) throw error;
   return (data ?? []) as CashExpense[];
@@ -194,7 +194,7 @@ export async function fetchCashExpenses(includeArchived = false): Promise<CashEx
 /** Daftar program iuran/kas (collections) untuk tab Kelola Program. */
 export async function fetchCollections(includeArchived = false): Promise<Collection[]> {
   let q = db.from("collections").select("*");
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as Collection[];

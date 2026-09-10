@@ -43,7 +43,7 @@ const SELECT =
 
 export async function fetchMous(includeArchived = false): Promise<MouWithRelations[]> {
   let q = supabase.from("mous").select(SELECT);
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as MouWithRelations[];
@@ -54,7 +54,7 @@ export async function fetchMousByCompany(
   includeArchived = false,
 ): Promise<MouWithRelations[]> {
   let q = supabase.from("mous").select(SELECT).eq("company_id", companyId);
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as MouWithRelations[];

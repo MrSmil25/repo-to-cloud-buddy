@@ -83,7 +83,7 @@ const SELECT =
 
 export async function fetchDeals(includeArchived = false): Promise<DealWithRelations[]> {
   let q = supabase.from("deals").select(SELECT);
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as DealWithRelations[];
@@ -94,7 +94,7 @@ export async function fetchDealsByCompany(
   includeArchived = false,
 ): Promise<DealWithRelations[]> {
   let q = supabase.from("deals").select(SELECT).eq("company_id", companyId);
-  if (!includeArchived) q = q.eq("is_archived", false);
+  if (includeArchived !== true) q = q.eq("is_archived", false);
   const { data, error } = await q.order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as DealWithRelations[];
