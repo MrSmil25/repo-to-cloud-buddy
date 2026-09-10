@@ -322,6 +322,10 @@ function FinanceSummaryPage() {
         )}
       </div>
 
+      <p className="text-xs text-muted-foreground">
+        Catatan: transaksi dan pengeluaran yang diarsipkan tidak dihitung dalam ringkasan ini.
+      </p>
+
       {/* Bagian 1: Saldo */}
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-4">
         <div className="rounded-2xl border bg-card p-6 shadow-sm lg:col-span-2">
