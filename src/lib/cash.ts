@@ -175,13 +175,21 @@ export async function fetchPendingClaims(): Promise<CollectionPayment[]> {
   return (data ?? []) as CollectionPayment[];
 }
 
-export async function fetchCashExpenses(): Promise<CashExpense[]> {
-  const { data, error } = await db
-    .from("cash_expenses")
-    .select("*, profiles:recorded_by(full_name)")
-    .order("expense_date", { ascending: false });
+export async function fetchCashExpenses(includeArchived = false): Promise<CashExpense[]> {
+  let q = db.from("cash_expenses").select("*, profiles:recorded_by(full_name)");
+  if (!includeArchived) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("expense_date", { ascending: false });
   if (error) throw error;
   return (data ?? []) as CashExpense[];
+}
+
+/** Daftar program iuran/kas (collections) untuk tab Kelola Program. */
+export async function fetchCollections(includeArchived = false): Promise<Collection[]> {
+  let q = db.from("collections").select("*");
+  if (!includeArchived) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("created_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as Collection[];
 }
 
 export async function createCollection(input: {
