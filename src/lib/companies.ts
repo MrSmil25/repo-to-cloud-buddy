@@ -68,11 +68,10 @@ export const CONTACT_CHANNEL_LABELS: Record<string, string> = {
   Phone: "Telepon",
 };
 
-export async function fetchCompanies(): Promise<Company[]> {
-  const { data, error } = await supabase
-    .from("companies")
-    .select("*")
-    .order("name", { ascending: true });
+export async function fetchCompanies(includeArchived = false): Promise<Company[]> {
+  let q = supabase.from("companies").select("*");
+  if (!includeArchived) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("name", { ascending: true });
   if (error) throw error;
   return data ?? [];
 }
@@ -113,12 +112,13 @@ export async function updateCompany(id: string, input: CompanyInput) {
   if (error) throw error;
 }
 
-export async function fetchPeople(companyId: string): Promise<Person[]> {
-  const { data, error } = await supabase
-    .from("people")
-    .select("*")
-    .eq("company_id", companyId)
-    .order("full_name", { ascending: true });
+export async function fetchPeople(
+  companyId: string,
+  includeArchived = false,
+): Promise<Person[]> {
+  let q = supabase.from("people").select("*").eq("company_id", companyId);
+  if (!includeArchived) q = q.eq("is_archived", false);
+  const { data, error } = await q.order("full_name", { ascending: true });
   if (error) throw error;
   return data ?? [];
 }
