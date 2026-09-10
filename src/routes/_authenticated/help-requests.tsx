@@ -81,7 +81,7 @@ function HelpRequestsPage() {
     queryKey: ["help-requests"],
     queryFn: fetchHelpRequests,
   });
-  const { data: events = [] } = useQuery({ queryKey: ["events"], queryFn: fetchEvents });
+  const { data: events = [] } = useQuery({ queryKey: ["events"], queryFn: () => fetchEvents() });
 
   const canDecide = isKadiv(profile?.role) || isBPH(profile?.role) || isSupervisor(profile?.role);
   const isBph = isBPH(profile?.role) || isSupervisor(profile?.role);

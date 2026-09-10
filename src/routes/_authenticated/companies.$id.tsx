@@ -84,11 +84,7 @@ function CompanyDetailPage() {
       </Link>
 
       {company.is_archived && (
-        <ArchivedInfoBanner
-          archivedBy={company.archived_by}
-          archivedAt={company.archived_at}
-          reason={company.archive_reason}
-        />
+        <ArchivedInfoBanner item={company} />
       )}
 
       <div className="flex flex-col gap-4 rounded-2xl border bg-card p-6 shadow-sm sm:flex-row sm:items-start sm:justify-between">
