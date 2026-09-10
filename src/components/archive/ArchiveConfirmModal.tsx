@@ -38,9 +38,9 @@ export function ArchiveConfirmModal({
   table: ArchivableTable;
   recordId: string;
   recordName: string;
-  extraWarning?: string;
-  invalidateKeys?: string[];
-  onDone?: () => void;
+  extraWarning?: string | undefined;
+  invalidateKeys?: string[] | undefined;
+  onDone?: (() => void) | undefined;
 }) {
   const queryClient = useQueryClient();
   const [reason, setReason] = useState("");

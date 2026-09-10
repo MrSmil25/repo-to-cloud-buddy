@@ -60,9 +60,9 @@ function DashboardPage() {
   const { data: profiles = [], isLoading } = useProfiles();
   const { data: divisions = [] } = useDivisions();
 
-  const { data: deals = [] } = useQuery({ queryKey: ["deals"], queryFn: fetchDeals });
+  const { data: deals = [] } = useQuery({ queryKey: ["deals"], queryFn: () => fetchDeals() });
   const { data: finance } = useQuery({ queryKey: ["dashboard-finance"], queryFn: fetchDashboardFinance });
-  const { data: events = [] } = useQuery({ queryKey: ["events"], queryFn: fetchEvents });
+  const { data: events = [] } = useQuery({ queryKey: ["events"], queryFn: () => fetchEvents() });
 
   const canSeeWealth = ["Controller", "Ketua", "Waketu", "Supervisor"].includes(
     profile?.role ?? "",

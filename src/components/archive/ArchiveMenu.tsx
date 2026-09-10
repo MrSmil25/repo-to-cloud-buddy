@@ -30,12 +30,12 @@ export function ArchiveMenu({
   table: ArchivableTable;
   recordId: string;
   recordName: string;
-  isArchived?: boolean | null;
-  itemDivision?: string | null;
-  extraWarning?: string;
-  invalidateKeys?: string[];
-  children?: ReactNode;
-  className?: string;
+  isArchived?: boolean | null | undefined;
+  itemDivision?: string | null | undefined;
+  extraWarning?: string | undefined;
+  invalidateKeys?: string[] | undefined;
+  children?: ReactNode | undefined;
+  className?: string | undefined;
 }) {
   const { data: profile } = useMyProfile();
   const [mode, setMode] = useState<ArchiveModalMode | null>(null);

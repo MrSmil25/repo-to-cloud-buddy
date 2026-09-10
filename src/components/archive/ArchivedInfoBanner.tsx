@@ -9,7 +9,7 @@ export function ArchivedInfoBanner({
   className = "",
 }: {
   item?: ArchivedFields | null;
-  className?: string;
+  className?: string | undefined;
 }) {
   const archivedBy = item?.archived_by ?? null;
   const { data: name } = useQuery({

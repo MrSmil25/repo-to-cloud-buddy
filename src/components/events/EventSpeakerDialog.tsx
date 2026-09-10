@@ -52,7 +52,7 @@ export function EventSpeakerDialog({
   entry?: EventSpeakerWithRelations | null;
 }) {
   const queryClient = useQueryClient();
-  const { data: speakers = [] } = useQuery({ queryKey: ["speakers"], queryFn: fetchSpeakers });
+  const { data: speakers = [] } = useQuery({ queryKey: ["speakers"], queryFn: () => fetchSpeakers() });
 
   const [speakerId, setSpeakerId] = useState("");
   const [search, setSearch] = useState("");

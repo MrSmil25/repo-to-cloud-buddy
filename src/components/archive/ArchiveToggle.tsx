@@ -10,8 +10,8 @@ export function ArchiveToggle({
 }: {
   checked: boolean;
   onCheckedChange: (v: boolean) => void;
-  id?: string;
-  className?: string;
+  id?: string | undefined;
+  className?: string | undefined;
 }) {
   return (
     <div
