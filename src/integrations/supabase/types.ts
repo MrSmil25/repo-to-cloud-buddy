@@ -56,6 +56,13 @@ export type Database = {
             foreignKeyName: "access_grants_granted_by_fkey"
             columns: ["granted_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "access_grants_granted_by_fkey"
+            columns: ["granted_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -79,6 +86,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "access_grants_grantee_id_fkey"
+            columns: ["grantee_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "access_grants_grantee_id_fkey"
@@ -162,6 +176,13 @@ export type Database = {
             foreignKeyName: "announcement_reads_reader_id_fkey"
             columns: ["reader_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "announcement_reads_reader_id_fkey"
+            columns: ["reader_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -238,6 +259,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "announcements_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "announcements_author_id_fkey"
             columns: ["author_id"]
@@ -338,6 +366,13 @@ export type Database = {
             foreignKeyName: "assignment_submissions_commented_by_fkey"
             columns: ["commented_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "assignment_submissions_commented_by_fkey"
+            columns: ["commented_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -361,6 +396,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "assignment_submissions_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "assignment_submissions_member_id_fkey"
@@ -422,6 +464,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "assignments"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assignment_targets_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "assignment_targets_member_id_fkey"
@@ -507,6 +556,13 @@ export type Database = {
             foreignKeyName: "assignments_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "assignments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -578,6 +634,13 @@ export type Database = {
           table_name?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "audit_log_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "audit_log_changed_by_fkey"
             columns: ["changed_by"]
@@ -655,6 +718,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "budgets_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "budgets_created_by_fkey"
             columns: ["created_by"]
@@ -748,6 +818,13 @@ export type Database = {
             foreignKeyName: "cash_expenses_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "cash_expenses_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -771,6 +848,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "cash_expenses_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "cash_expenses_recorded_by_fkey"
@@ -847,6 +931,13 @@ export type Database = {
             foreignKeyName: "coaching_notes_coach_id_fkey"
             columns: ["coach_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "coaching_notes_coach_id_fkey"
+            columns: ["coach_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -870,6 +961,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "coaching_notes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "coaching_notes_member_id_fkey"
@@ -963,6 +1061,13 @@ export type Database = {
             foreignKeyName: "collection_payments_member_id_fkey"
             columns: ["member_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "collection_payments_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -986,6 +1091,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "collection_payments_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "collection_payments_verified_by_fkey"
@@ -1074,6 +1186,13 @@ export type Database = {
             foreignKeyName: "collections_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "collections_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -1097,6 +1216,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "collections_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "collections_created_by_fkey"
@@ -1204,6 +1330,13 @@ export type Database = {
             foreignKeyName: "companies_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "companies_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -1227,6 +1360,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "companies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "companies_created_by_fkey"
@@ -1262,6 +1402,288 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "divisions"
             referencedColumns: ["code"]
+          },
+        ]
+      }
+      content_pillars: {
+        Row: {
+          color_hex: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          sort_order: number | null
+        }
+        Insert: {
+          color_hex?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          sort_order?: number | null
+        }
+        Update: {
+          color_hex?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
+      content_plans: {
+        Row: {
+          archive_reason: string | null
+          archived_at: string | null
+          archived_by: string | null
+          asset_url: string | null
+          brief: string | null
+          caption_draft: string | null
+          copywriter_id: string | null
+          created_at: string | null
+          created_by: string | null
+          format: Database["public"]["Enums"]["content_format"]
+          hashtags: string | null
+          id: string
+          is_archived: boolean
+          owner_division: string | null
+          pillar_id: string | null
+          platform: Database["public"]["Enums"]["content_platform"]
+          published_at: string | null
+          published_url: string | null
+          related_event_id: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewer_id: string | null
+          scheduled_date: string | null
+          scheduled_time: string | null
+          status: Database["public"]["Enums"]["content_status"]
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
+          asset_url?: string | null
+          brief?: string | null
+          caption_draft?: string | null
+          copywriter_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          format?: Database["public"]["Enums"]["content_format"]
+          hashtags?: string | null
+          id?: string
+          is_archived?: boolean
+          owner_division?: string | null
+          pillar_id?: string | null
+          platform?: Database["public"]["Enums"]["content_platform"]
+          published_at?: string | null
+          published_url?: string | null
+          related_event_id?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          scheduled_date?: string | null
+          scheduled_time?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          archive_reason?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
+          asset_url?: string | null
+          brief?: string | null
+          caption_draft?: string | null
+          copywriter_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          format?: Database["public"]["Enums"]["content_format"]
+          hashtags?: string | null
+          id?: string
+          is_archived?: boolean
+          owner_division?: string | null
+          pillar_id?: string | null
+          platform?: Database["public"]["Enums"]["content_platform"]
+          published_at?: string | null
+          published_url?: string | null
+          related_event_id?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          scheduled_date?: string | null
+          scheduled_time?: string | null
+          status?: Database["public"]["Enums"]["content_status"]
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_plans_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "content_plans_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_plans_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_copywriter_id_fkey"
+            columns: ["copywriter_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "content_plans_copywriter_id_fkey"
+            columns: ["copywriter_id"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_copywriter_id_fkey"
+            columns: ["copywriter_id"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_copywriter_id_fkey"
+            columns: ["copywriter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_plans_copywriter_id_fkey"
+            columns: ["copywriter_id"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "content_plans_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_plans_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_owner_division_fkey"
+            columns: ["owner_division"]
+            isOneToOne: false
+            referencedRelation: "divisions"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "content_plans_pillar_id_fkey"
+            columns: ["pillar_id"]
+            isOneToOne: false
+            referencedRelation: "content_pillars"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_plans_related_event_id_fkey"
+            columns: ["related_event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_plans_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "content_plans_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "content_plans_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_plans_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
           },
         ]
       }
@@ -1304,6 +1726,13 @@ export type Database = {
             foreignKeyName: "contribution_notes_member_id_fkey"
             columns: ["member_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "contribution_notes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -1327,6 +1756,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "contribution_notes_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "contribution_notes_recorded_by_fkey"
@@ -1444,6 +1880,13 @@ export type Database = {
             foreignKeyName: "deals_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "deals_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -1493,6 +1936,13 @@ export type Database = {
             foreignKeyName: "deals_owner_person_id_fkey"
             columns: ["owner_person_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_person_id_fkey"
+            columns: ["owner_person_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -1526,6 +1976,217 @@ export type Database = {
           },
         ]
       }
+      design_requests: {
+        Row: {
+          archived_at: string | null
+          archived_by: string | null
+          brief: string
+          completed_at: string | null
+          content_plan_id: string | null
+          created_at: string | null
+          design_type: Database["public"]["Enums"]["design_type"]
+          designer_id: string | null
+          id: string
+          is_archived: boolean
+          needed_by: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          reference_notes: string | null
+          reject_reason: string | null
+          related_event_id: string | null
+          requested_by: string
+          requester_division: string | null
+          result_url: string | null
+          revision_count: number | null
+          revision_notes: string | null
+          status: Database["public"]["Enums"]["design_status"]
+          submitted_at: string | null
+          taken_at: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          archived_at?: string | null
+          archived_by?: string | null
+          brief: string
+          completed_at?: string | null
+          content_plan_id?: string | null
+          created_at?: string | null
+          design_type?: Database["public"]["Enums"]["design_type"]
+          designer_id?: string | null
+          id?: string
+          is_archived?: boolean
+          needed_by?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          reference_notes?: string | null
+          reject_reason?: string | null
+          related_event_id?: string | null
+          requested_by: string
+          requester_division?: string | null
+          result_url?: string | null
+          revision_count?: number | null
+          revision_notes?: string | null
+          status?: Database["public"]["Enums"]["design_status"]
+          submitted_at?: string | null
+          taken_at?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          archived_at?: string | null
+          archived_by?: string | null
+          brief?: string
+          completed_at?: string | null
+          content_plan_id?: string | null
+          created_at?: string | null
+          design_type?: Database["public"]["Enums"]["design_type"]
+          designer_id?: string | null
+          id?: string
+          is_archived?: boolean
+          needed_by?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          reference_notes?: string | null
+          reject_reason?: string | null
+          related_event_id?: string | null
+          requested_by?: string
+          requester_division?: string | null
+          result_url?: string | null
+          revision_count?: number | null
+          revision_notes?: string | null
+          status?: Database["public"]["Enums"]["design_status"]
+          submitted_at?: string | null
+          taken_at?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_requests_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "design_requests_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_requests_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_content_plan_id_fkey"
+            columns: ["content_plan_id"]
+            isOneToOne: false
+            referencedRelation: "content_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_requests_designer_id_fkey"
+            columns: ["designer_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "design_requests_designer_id_fkey"
+            columns: ["designer_id"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_designer_id_fkey"
+            columns: ["designer_id"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_designer_id_fkey"
+            columns: ["designer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_requests_designer_id_fkey"
+            columns: ["designer_id"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_related_event_id_fkey"
+            columns: ["related_event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "design_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "design_requests_requester_division_fkey"
+            columns: ["requester_division"]
+            isOneToOne: false
+            referencedRelation: "divisions"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
       division_section_overrides: {
         Row: {
           configured_by: string | null
@@ -1552,6 +2213,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "division_section_overrides_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "division_section_overrides_configured_by_fkey"
             columns: ["configured_by"]
@@ -1661,6 +2329,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "events"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_rundowns_pic_id_fkey"
+            columns: ["pic_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "event_rundowns_pic_id_fkey"
@@ -1836,6 +2511,13 @@ export type Database = {
             foreignKeyName: "events_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "events_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -1859,6 +2541,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "events_pic_id_fkey"
+            columns: ["pic_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "events_pic_id_fkey"
@@ -1971,6 +2660,13 @@ export type Database = {
             foreignKeyName: "fund_requests_approver_id_fkey"
             columns: ["approver_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "fund_requests_approver_id_fkey"
+            columns: ["approver_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2008,6 +2704,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "divisions"
             referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "fund_requests_requester_id_fkey"
+            columns: ["requester_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "fund_requests_requester_id_fkey"
@@ -2102,6 +2805,13 @@ export type Database = {
             foreignKeyName: "fund_transactions_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "fund_transactions_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2125,6 +2835,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "fund_transactions_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "fund_transactions_recorded_by_fkey"
@@ -2256,6 +2973,13 @@ export type Database = {
             foreignKeyName: "help_requests_approver_id_fkey"
             columns: ["approver_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "help_requests_approver_id_fkey"
+            columns: ["approver_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2279,6 +3003,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "help_requests_final_assignee_id_fkey"
+            columns: ["final_assignee_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "help_requests_final_assignee_id_fkey"
@@ -2333,6 +3064,13 @@ export type Database = {
             foreignKeyName: "help_requests_requested_by_fkey"
             columns: ["requested_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "help_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2363,6 +3101,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "divisions"
             referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "help_requests_suggested_assignee_id_fkey"
+            columns: ["suggested_assignee_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "help_requests_suggested_assignee_id_fkey"
@@ -2460,6 +3205,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "divisions"
             referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "invitations_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "invitations_created_by_fkey"
@@ -2569,6 +3321,13 @@ export type Database = {
             foreignKeyName: "key_results_owner_person_id_fkey"
             columns: ["owner_person_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "key_results_owner_person_id_fkey"
+            columns: ["owner_person_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2655,6 +3414,13 @@ export type Database = {
             foreignKeyName: "letters_approved_by_fkey"
             columns: ["approved_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "letters_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2685,6 +3451,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "divisions"
             referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "letters_requester_id_fkey"
+            columns: ["requester_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "letters_requester_id_fkey"
@@ -2748,6 +3521,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "meetings"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meeting_attendance_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "meeting_attendance_member_id_fkey"
@@ -2821,6 +3601,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "meetings"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meeting_decisions_pic_id_fkey"
+            columns: ["pic_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "meeting_decisions_pic_id_fkey"
@@ -2910,6 +3697,13 @@ export type Database = {
             foreignKeyName: "meetings_led_by_fkey"
             columns: ["led_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "meetings_led_by_fkey"
+            columns: ["led_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -2933,6 +3727,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "meetings_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "meetings_recorded_by_fkey"
@@ -3040,6 +3841,13 @@ export type Database = {
             foreignKeyName: "mous_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "mous_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3077,6 +3885,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "deals"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mous_signatory_our_side_id_fkey"
+            columns: ["signatory_our_side_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "mous_signatory_our_side_id_fkey"
@@ -3140,6 +3955,13 @@ export type Database = {
           type?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "notifications_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "notifications_recipient_id_fkey"
             columns: ["recipient_id"]
@@ -3229,6 +4051,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "objectives_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "objectives_owner_id_fkey"
             columns: ["owner_id"]
@@ -3403,6 +4232,13 @@ export type Database = {
             foreignKeyName: "people_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "people_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3523,6 +4359,13 @@ export type Database = {
             foreignKeyName: "proposal_votes_voter_id_fkey"
             columns: ["voter_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "proposal_votes_voter_id_fkey"
+            columns: ["voter_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3575,6 +4418,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "section_settings_configured_by_fkey"
+            columns: ["configured_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
           {
             foreignKeyName: "section_settings_configured_by_fkey"
             columns: ["configured_by"]
@@ -3671,6 +4521,13 @@ export type Database = {
             foreignKeyName: "speakers_archived_by_fkey"
             columns: ["archived_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "speakers_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3756,6 +4613,13 @@ export type Database = {
             foreignKeyName: "task_cancel_requests_approver_id_fkey"
             columns: ["approver_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "task_cancel_requests_approver_id_fkey"
+            columns: ["approver_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3779,6 +4643,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "task_cancel_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "task_cancel_requests_requested_by_fkey"
@@ -3892,6 +4763,13 @@ export type Database = {
             foreignKeyName: "tasks_assignee_id_fkey"
             columns: ["assignee_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "tasks_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3920,6 +4798,13 @@ export type Database = {
             foreignKeyName: "tasks_blocked_by_person_id_fkey"
             columns: ["blocked_by_person_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "tasks_blocked_by_person_id_fkey"
+            columns: ["blocked_by_person_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -3943,6 +4828,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "tasks_created_by_fkey"
@@ -4098,6 +4990,13 @@ export type Database = {
             foreignKeyName: "warning_proposals_proposed_by_fkey"
             columns: ["proposed_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "warning_proposals_proposed_by_fkey"
+            columns: ["proposed_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -4121,6 +5020,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "warning_proposals_target_member_id_fkey"
+            columns: ["target_member_id"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "warning_proposals_target_member_id_fkey"
@@ -4227,6 +5133,13 @@ export type Database = {
             foreignKeyName: "warnings_issued_by_fkey"
             columns: ["issued_by"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "warnings_issued_by_fkey"
+            columns: ["issued_by"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -4255,6 +5168,13 @@ export type Database = {
             foreignKeyName: "warnings_member_id_fkey"
             columns: ["member_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "warnings_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -4278,6 +5198,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "workload_distribution"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "warnings_revoked_by_fkey"
+            columns: ["revoked_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
           },
           {
             foreignKeyName: "warnings_revoked_by_fkey"
@@ -4408,6 +5335,13 @@ export type Database = {
             foreignKeyName: "tasks_blocked_by_person_id_fkey"
             columns: ["penyumbat_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "tasks_blocked_by_person_id_fkey"
+            columns: ["penyumbat_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -4478,6 +5412,26 @@ export type Database = {
             referencedColumns: ["code"]
           },
         ]
+      }
+      content_calendar_summary: {
+        Row: {
+          bulan: string | null
+          jumlah: number | null
+          pilar: string | null
+          platform: Database["public"]["Enums"]["content_platform"] | null
+          sudah_tayang: number | null
+        }
+        Relationships: []
+      }
+      design_workload: {
+        Row: {
+          designer_id: string | null
+          full_name: string | null
+          lewat_tenggat: number | null
+          sedang_dikerjakan: number | null
+          total_selesai: number | null
+        }
+        Relationships: []
       }
       financial_wallets: {
         Row: {
@@ -4597,6 +5551,13 @@ export type Database = {
             foreignKeyName: "fund_requests_requester_id_fkey"
             columns: ["requester_id"]
             isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "fund_requests_requester_id_fkey"
+            columns: ["requester_id"]
+            isOneToOne: false
             referencedRelation: "member_holdings"
             referencedColumns: ["member_id"]
           },
@@ -4656,6 +5617,15 @@ export type Database = {
       can_access_event: { Args: { target_event: string }; Returns: boolean }
       claim_invite: { Args: { p_code: string }; Returns: string }
       close_expired_proposals: { Args: never; Returns: undefined }
+      create_design_request_from_content: {
+        Args: {
+          p_content_id: string
+          p_design_type?: Database["public"]["Enums"]["design_type"]
+          p_extra_brief?: string
+          p_needed_by?: string
+        }
+        Returns: string
+      }
       create_task_from_decision: {
         Args: { p_decision_id: string }
         Returns: string
@@ -4765,6 +5735,7 @@ export type Database = {
           votes_cast: number
         }[]
       }
+      remind_content_and_design: { Args: never; Returns: undefined }
       remind_stale_tasks: { Args: never; Returns: undefined }
       restore_record: {
         Args: { p_record_id: string; p_table: string }
@@ -4815,6 +5786,33 @@ export type Database = {
         | "Vendor"
       contact_channel: "WA" | "Email" | "Phone"
       contact_role: "Decision_Maker" | "Influencer" | "Executor" | "Gatekeeper"
+      content_format:
+        | "Feed_Tunggal"
+        | "Carousel"
+        | "Reels"
+        | "Story"
+        | "Video_Panjang"
+        | "Thread"
+        | "Artikel"
+        | "Lainnya"
+      content_platform:
+        | "Instagram"
+        | "TikTok"
+        | "LinkedIn"
+        | "X"
+        | "WhatsApp"
+        | "YouTube"
+        | "Website"
+        | "Lainnya"
+      content_status:
+        | "Ide"
+        | "Draf"
+        | "Perlu_Desain"
+        | "Review"
+        | "Disetujui"
+        | "Terjadwal"
+        | "Tayang"
+        | "Dibatalkan"
       contribution_kind:
         | "Membantu_Rekan"
         | "Inisiatif"
@@ -4836,6 +5834,25 @@ export type Database = {
         | "Speaker"
         | "Institutional_MoU"
         | "In_kind"
+      design_status:
+        | "Baru"
+        | "Diambil"
+        | "Dikerjakan"
+        | "Review"
+        | "Revisi"
+        | "Selesai"
+        | "Ditolak"
+      design_type:
+        | "Poster"
+        | "Feed_IG"
+        | "Story_IG"
+        | "Carousel"
+        | "Banner"
+        | "Sertifikat"
+        | "Deck"
+        | "Merchandise"
+        | "Spanduk"
+        | "Lainnya"
       event_status: "Planning" | "Preparation" | "Live" | "Done" | "Cancelled"
       event_type:
         | "Flagship"
@@ -5083,6 +6100,36 @@ export const Constants = {
       ],
       contact_channel: ["WA", "Email", "Phone"],
       contact_role: ["Decision_Maker", "Influencer", "Executor", "Gatekeeper"],
+      content_format: [
+        "Feed_Tunggal",
+        "Carousel",
+        "Reels",
+        "Story",
+        "Video_Panjang",
+        "Thread",
+        "Artikel",
+        "Lainnya",
+      ],
+      content_platform: [
+        "Instagram",
+        "TikTok",
+        "LinkedIn",
+        "X",
+        "WhatsApp",
+        "YouTube",
+        "Website",
+        "Lainnya",
+      ],
+      content_status: [
+        "Ide",
+        "Draf",
+        "Perlu_Desain",
+        "Review",
+        "Disetujui",
+        "Terjadwal",
+        "Tayang",
+        "Dibatalkan",
+      ],
       contribution_kind: [
         "Membantu_Rekan",
         "Inisiatif",
@@ -5106,6 +6153,27 @@ export const Constants = {
         "Speaker",
         "Institutional_MoU",
         "In_kind",
+      ],
+      design_status: [
+        "Baru",
+        "Diambil",
+        "Dikerjakan",
+        "Review",
+        "Revisi",
+        "Selesai",
+        "Ditolak",
+      ],
+      design_type: [
+        "Poster",
+        "Feed_IG",
+        "Story_IG",
+        "Carousel",
+        "Banner",
+        "Sertifikat",
+        "Deck",
+        "Merchandise",
+        "Spanduk",
+        "Lainnya",
       ],
       event_status: ["Planning", "Preparation", "Live", "Done", "Cancelled"],
       event_type: [

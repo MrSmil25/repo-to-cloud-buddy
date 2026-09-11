@@ -9,7 +9,9 @@ export type ArchivableTable =
   | "cash_expenses"
   | "speakers"
   | "events"
-  | "mous";
+  | "mous"
+  | "content_plans"
+  | "design_requests";
 
 export const ARCHIVE_LABELS: Record<ArchivableTable, string> = {
   deals: "Deal",
@@ -21,6 +23,8 @@ export const ARCHIVE_LABELS: Record<ArchivableTable, string> = {
   speakers: "Speaker",
   events: "Event",
   mous: "MoU",
+  content_plans: "Rencana Konten",
+  design_requests: "Permintaan Desain",
 };
 
 const BPH_ROLES = ["Ketua", "Waketu", "Supervisor"];
@@ -40,6 +44,9 @@ export function canArchive(
   if (!role) return false;
   if (isBphRole(role)) return true;
   if (table === "mous") return false; // hanya BPH/Supervisor
+  if (table === "content_plans" || table === "design_requests") {
+    return role === "Kadiv";
+  }
   if (FINANCE_TABLES.includes(table)) return role === "Controller";
   if (role === "Controller") return false;
   if (role === "Kadiv") {

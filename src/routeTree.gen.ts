@@ -21,8 +21,10 @@ import { Route as AuthenticatedCalendarRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedCashRouteImport } from './routes/_authenticated/cash'
 import { Route as AuthenticatedCoachingRouteImport } from './routes/_authenticated/coaching'
 import { Route as AuthenticatedCommandCenterRouteImport } from './routes/_authenticated/command-center'
+import { Route as AuthenticatedContentCalendarRouteImport } from './routes/_authenticated/content-calendar'
 import { Route as AuthenticatedContributionsRouteImport } from './routes/_authenticated/contributions'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDesignQueueRouteImport } from './routes/_authenticated/design-queue'
 import { Route as AuthenticatedDivisionsRouteImport } from './routes/_authenticated/divisions'
 import { Route as AuthenticatedFinanceSummaryRouteImport } from './routes/_authenticated/finance-summary'
 import { Route as AuthenticatedFundApprovalsRouteImport } from './routes/_authenticated/fund-approvals'
@@ -123,6 +125,12 @@ const AuthenticatedCommandCenterRoute =
     path: '/command-center',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedContentCalendarRoute =
+  AuthenticatedContentCalendarRouteImport.update({
+    id: '/content-calendar',
+    path: '/content-calendar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedContributionsRoute =
   AuthenticatedContributionsRouteImport.update({
     id: '/contributions',
@@ -134,6 +142,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDesignQueueRoute =
+  AuthenticatedDesignQueueRouteImport.update({
+    id: '/design-queue',
+    path: '/design-queue',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDivisionsRoute = AuthenticatedDivisionsRouteImport.update({
   id: '/divisions',
   path: '/divisions',
@@ -364,8 +378,10 @@ export interface FileRoutesByFullPath {
   '/cash': typeof AuthenticatedCashRoute
   '/coaching': typeof AuthenticatedCoachingRoute
   '/command-center': typeof AuthenticatedCommandCenterRoute
+  '/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/contributions': typeof AuthenticatedContributionsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/design-queue': typeof AuthenticatedDesignQueueRoute
   '/divisions': typeof AuthenticatedDivisionsRoute
   '/finance-summary': typeof AuthenticatedFinanceSummaryRoute
   '/fund-approvals': typeof AuthenticatedFundApprovalsRoute
@@ -417,8 +433,10 @@ export interface FileRoutesByTo {
   '/cash': typeof AuthenticatedCashRoute
   '/coaching': typeof AuthenticatedCoachingRoute
   '/command-center': typeof AuthenticatedCommandCenterRoute
+  '/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/contributions': typeof AuthenticatedContributionsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/design-queue': typeof AuthenticatedDesignQueueRoute
   '/divisions': typeof AuthenticatedDivisionsRoute
   '/finance-summary': typeof AuthenticatedFinanceSummaryRoute
   '/fund-approvals': typeof AuthenticatedFundApprovalsRoute
@@ -472,8 +490,10 @@ export interface FileRoutesById {
   '/_authenticated/cash': typeof AuthenticatedCashRoute
   '/_authenticated/coaching': typeof AuthenticatedCoachingRoute
   '/_authenticated/command-center': typeof AuthenticatedCommandCenterRoute
+  '/_authenticated/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/_authenticated/contributions': typeof AuthenticatedContributionsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/design-queue': typeof AuthenticatedDesignQueueRoute
   '/_authenticated/divisions': typeof AuthenticatedDivisionsRoute
   '/_authenticated/finance-summary': typeof AuthenticatedFinanceSummaryRoute
   '/_authenticated/fund-approvals': typeof AuthenticatedFundApprovalsRoute
@@ -527,8 +547,10 @@ export interface FileRouteTypes {
     | '/cash'
     | '/coaching'
     | '/command-center'
+    | '/content-calendar'
     | '/contributions'
     | '/dashboard'
+    | '/design-queue'
     | '/divisions'
     | '/finance-summary'
     | '/fund-approvals'
@@ -580,8 +602,10 @@ export interface FileRouteTypes {
     | '/cash'
     | '/coaching'
     | '/command-center'
+    | '/content-calendar'
     | '/contributions'
     | '/dashboard'
+    | '/design-queue'
     | '/divisions'
     | '/finance-summary'
     | '/fund-approvals'
@@ -634,8 +658,10 @@ export interface FileRouteTypes {
     | '/_authenticated/cash'
     | '/_authenticated/coaching'
     | '/_authenticated/command-center'
+    | '/_authenticated/content-calendar'
     | '/_authenticated/contributions'
     | '/_authenticated/dashboard'
+    | '/_authenticated/design-queue'
     | '/_authenticated/divisions'
     | '/_authenticated/finance-summary'
     | '/_authenticated/fund-approvals'
@@ -771,6 +797,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCommandCenterRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/content-calendar': {
+      id: '/_authenticated/content-calendar'
+      path: '/content-calendar'
+      fullPath: '/content-calendar'
+      preLoaderRoute: typeof AuthenticatedContentCalendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/contributions': {
       id: '/_authenticated/contributions'
       path: '/contributions'
@@ -783,6 +816,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/design-queue': {
+      id: '/_authenticated/design-queue'
+      path: '/design-queue'
+      fullPath: '/design-queue'
+      preLoaderRoute: typeof AuthenticatedDesignQueueRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/divisions': {
@@ -1061,8 +1101,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCashRoute: typeof AuthenticatedCashRoute
   AuthenticatedCoachingRoute: typeof AuthenticatedCoachingRoute
   AuthenticatedCommandCenterRoute: typeof AuthenticatedCommandCenterRoute
+  AuthenticatedContentCalendarRoute: typeof AuthenticatedContentCalendarRoute
   AuthenticatedContributionsRoute: typeof AuthenticatedContributionsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDesignQueueRoute: typeof AuthenticatedDesignQueueRoute
   AuthenticatedDivisionsRoute: typeof AuthenticatedDivisionsRoute
   AuthenticatedFinanceSummaryRoute: typeof AuthenticatedFinanceSummaryRoute
   AuthenticatedFundApprovalsRoute: typeof AuthenticatedFundApprovalsRoute
@@ -1110,8 +1152,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCashRoute: AuthenticatedCashRoute,
   AuthenticatedCoachingRoute: AuthenticatedCoachingRoute,
   AuthenticatedCommandCenterRoute: AuthenticatedCommandCenterRoute,
+  AuthenticatedContentCalendarRoute: AuthenticatedContentCalendarRoute,
   AuthenticatedContributionsRoute: AuthenticatedContributionsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDesignQueueRoute: AuthenticatedDesignQueueRoute,
   AuthenticatedDivisionsRoute: AuthenticatedDivisionsRoute,
   AuthenticatedFinanceSummaryRoute: AuthenticatedFinanceSummaryRoute,
   AuthenticatedFundApprovalsRoute: AuthenticatedFundApprovalsRoute,
