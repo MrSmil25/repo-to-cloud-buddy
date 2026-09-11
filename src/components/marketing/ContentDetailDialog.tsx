@@ -117,9 +117,7 @@ export function ContentDetailDialog({
 
           {plan && (
             <div className="space-y-5">
-              {plan.is_archived && (
-                <ArchivedInfoBanner item={plan} nameResolver={nameOf} />
-              )}
+              {plan.is_archived && <ArchivedInfoBanner item={plan} />}
 
               <div className="grid gap-2 rounded-lg border bg-muted/40 p-3 text-xs sm:grid-cols-2">
                 <p>Platform: <b>{plan.platform}</b> · Format: <b>{label(plan.format)}</b></p>
