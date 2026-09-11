@@ -4392,6 +4392,241 @@ export type Database = {
           },
         ]
       }
+      resource_clicks: {
+        Row: {
+          clicked_at: string | null
+          clicked_by: string | null
+          id: string
+          resource_id: string | null
+        }
+        Insert: {
+          clicked_at?: string | null
+          clicked_by?: string | null
+          id?: string
+          resource_id?: string | null
+        }
+        Update: {
+          clicked_at?: string | null
+          clicked_by?: string | null
+          id?: string
+          resource_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_clicks_clicked_by_fkey"
+            columns: ["clicked_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "resource_clicks_clicked_by_fkey"
+            columns: ["clicked_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resource_clicks_clicked_by_fkey"
+            columns: ["clicked_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resource_clicks_clicked_by_fkey"
+            columns: ["clicked_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_clicks_clicked_by_fkey"
+            columns: ["clicked_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resource_clicks_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resource_popularity"
+            referencedColumns: ["resource_id"]
+          },
+          {
+            foreignKeyName: "resource_clicks_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resources: {
+        Row: {
+          archived_at: string | null
+          archived_by: string | null
+          asset_category: Database["public"]["Enums"]["asset_category"] | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          folder_id: string | null
+          icon_url: string | null
+          id: string
+          is_archived: boolean
+          is_folder: boolean
+          is_pinned: boolean | null
+          kind: Database["public"]["Enums"]["resource_kind"]
+          scope: Database["public"]["Enums"]["resource_scope"]
+          sort_order: number | null
+          tags: string[] | null
+          target_division: string | null
+          target_roles: Database["public"]["Enums"]["user_role"][] | null
+          title: string
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          archived_at?: string | null
+          archived_by?: string | null
+          asset_category?: Database["public"]["Enums"]["asset_category"] | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          folder_id?: string | null
+          icon_url?: string | null
+          id?: string
+          is_archived?: boolean
+          is_folder?: boolean
+          is_pinned?: boolean | null
+          kind: Database["public"]["Enums"]["resource_kind"]
+          scope?: Database["public"]["Enums"]["resource_scope"]
+          sort_order?: number | null
+          tags?: string[] | null
+          target_division?: string | null
+          target_roles?: Database["public"]["Enums"]["user_role"][] | null
+          title: string
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          archived_at?: string | null
+          archived_by?: string | null
+          asset_category?: Database["public"]["Enums"]["asset_category"] | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          folder_id?: string | null
+          icon_url?: string | null
+          id?: string
+          is_archived?: boolean
+          is_folder?: boolean
+          is_pinned?: boolean | null
+          kind?: Database["public"]["Enums"]["resource_kind"]
+          scope?: Database["public"]["Enums"]["resource_scope"]
+          sort_order?: number | null
+          tags?: string[] | null
+          target_division?: string | null
+          target_roles?: Database["public"]["Enums"]["user_role"][] | null
+          title?: string
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_folder"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "resource_popularity"
+            referencedColumns: ["resource_id"]
+          },
+          {
+            foreignKeyName: "fk_folder"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resources_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "resources_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resources_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resources_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resources_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "design_workload"
+            referencedColumns: ["designer_id"]
+          },
+          {
+            foreignKeyName: "resources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "member_holdings"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "member_progress"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "workload_distribution"
+            referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "resources_target_division_fkey"
+            columns: ["target_division"]
+            isOneToOne: false
+            referencedRelation: "divisions"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
       section_settings: {
         Row: {
           configured_by: string | null
@@ -5584,6 +5819,18 @@ export type Database = {
           },
         ]
       }
+      resource_popularity: {
+        Row: {
+          kind: Database["public"]["Enums"]["resource_kind"] | null
+          klik_terakhir: string | null
+          pengguna_unik_30h: number | null
+          resource_id: string | null
+          title: string | null
+          total_klik_30h: number | null
+          url: string | null
+        }
+        Relationships: []
+      }
       workload_distribution: {
         Row: {
           beban_aktif: number | null
@@ -5672,6 +5919,7 @@ export type Database = {
       has_voted: { Args: { p_proposal: string }; Returns: boolean }
       is_event_pic: { Args: { target_event: string }; Returns: boolean }
       is_my_assignment: { Args: { p_assignment: string }; Returns: boolean }
+      is_resource_visible: { Args: { p_resource_id: string }; Returns: boolean }
       is_section_visible: { Args: { p_section: string }; Returns: boolean }
       member_report: {
         Args: { p_end: string; p_member: string; p_start: string }
@@ -5760,6 +6008,18 @@ export type Database = {
     Enums: {
       announcement_level: "Mendesak" | "Penting" | "Info"
       announcement_scope: "Organisasi" | "Divisi"
+      asset_category:
+        | "Brand_Kit"
+        | "Logo"
+        | "Template_Desain"
+        | "Foto"
+        | "Video"
+        | "Font"
+        | "Ikon"
+        | "Deck_Presentasi"
+        | "Dokumen_Referensi"
+        | "Panduan_Gaya"
+        | "Lainnya"
       assignment_scope: "Semua" | "Divisi" | "Individu"
       budget_status: "On_Budget" | "Warning" | "Over_Budget"
       cancel_request_status:
@@ -5921,6 +6181,8 @@ export type Database = {
         | "Ditolak"
       priority_level: "P0" | "P1" | "P2"
       proposal_status: "Voting" | "Lolos" | "Gagal" | "Dibatalkan"
+      resource_kind: "Alat_Kerja" | "Aset"
+      resource_scope: "Semua_Organisasi" | "Divisi" | "Peran"
       speaker_confirmation: "Invited" | "Confirmed" | "Declined" | "Cancelled"
       submission_visibility: "Supervisor_Saja" | "Supervisor_Ketua_Kadiv"
       task_priority: "Low" | "Medium" | "High" | "Critical"
@@ -6071,6 +6333,19 @@ export const Constants = {
     Enums: {
       announcement_level: ["Mendesak", "Penting", "Info"],
       announcement_scope: ["Organisasi", "Divisi"],
+      asset_category: [
+        "Brand_Kit",
+        "Logo",
+        "Template_Desain",
+        "Foto",
+        "Video",
+        "Font",
+        "Ikon",
+        "Deck_Presentasi",
+        "Dokumen_Referensi",
+        "Panduan_Gaya",
+        "Lainnya",
+      ],
       assignment_scope: ["Semua", "Divisi", "Individu"],
       budget_status: ["On_Budget", "Warning", "Over_Budget"],
       cancel_request_status: [
@@ -6252,6 +6527,8 @@ export const Constants = {
       ],
       priority_level: ["P0", "P1", "P2"],
       proposal_status: ["Voting", "Lolos", "Gagal", "Dibatalkan"],
+      resource_kind: ["Alat_Kerja", "Aset"],
+      resource_scope: ["Semua_Organisasi", "Divisi", "Peran"],
       speaker_confirmation: ["Invited", "Confirmed", "Declined", "Cancelled"],
       submission_visibility: ["Supervisor_Saja", "Supervisor_Ketua_Kadiv"],
       task_priority: ["Low", "Medium", "High", "Critical"],
